@@ -1,3 +1,5 @@
+import * as actionTypes from "../constants/actionTypes";
+
 const initialState = {
   completionStatus: null,
   fromDate: null,
@@ -5,10 +7,17 @@ const initialState = {
 };
 const filter = (state = initialState, action) => {
   switch (action.type) {
-    case "COMPLETION_STATUS":
-      return action.filter;
-    case "DATE_RANGE":
-      return action.filter;
+    case actionTypes.JOBS_STATUS_FILTER:
+      return {
+        ...state,
+        completionStatus: action.completionStatus
+      };
+    case actionTypes.DATE_FILTER:
+      return {
+        ...state,
+        fromDate: action.fromDate,
+        toDate: action.toDate
+      };
     default:
       return state;
   }

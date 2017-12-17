@@ -1,18 +1,25 @@
+import * as actionTypes from "../constants/actionTypes";
+
 const initialState = {
   isFetching: false,
   error: false,
   items: []
 };
-const jobs = (state = initialState, action) => {
+const userJobs = (state = initialState, action) => {
   switch (action.type) {
-    case "ERROR_FETCHING_JOBS":
-      return;
-    case "REQUEST_JOBS":
-      return;
-    case "RECEIVE_JOBS":
-      return;
+    case actionTypes.INITIATE_USER_JOBS_FETCH:
+      return { ...state, isFetching: true, error: false };
+    case actionTypes.FETCH_USER_JOBS_SUCCESS:
+      return {
+        ...state,
+        items: action.userJobs,
+        isFetching: false,
+        error: false
+      };
+    case actionTypes.FETCH_PLAYERS_FAILURE:
+      return { ...state, error: true, isFetching: false };
     default:
       return state;
   }
 };
-export default jobs;
+export default userJobs;

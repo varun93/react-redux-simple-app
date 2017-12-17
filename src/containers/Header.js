@@ -1,16 +1,12 @@
+import React from "react";
+import AppBar from "material-ui/AppBar";
+
 const Header = () => {
   return (
     <header>
-      <div>
-        <ul>
-          <li>
-            <Link to="/">Homepage</Link>
-          </li>
-          <li>
-            <Link to="/players">Players</Link>
-          </li>
-        </ul>
-      </div>
+      <AppBar title="Data Uploader Service" />
     </header>
   );
 };
+
+export default Header;

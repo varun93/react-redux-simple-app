@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import RadioButtonUi from "../atomic-components/RadioButtonUi";
 
-export default class UserJobsStatusFilterContainer extends Component {
+class UserJobsStatusFilterContainer extends Component {
   constructor(props, context) {
     super(props, context);
     this.options = [
@@ -45,3 +46,11 @@ export default class UserJobsStatusFilterContainer extends Component {
     );
   }
 }
+
+const mapDispatchToProps = dispatch => ({});
+
+const mapStateToProps = (state, ownProps) => ({});
+
+export default connect(mapStateToProps, mapDispatchToProps)(
+  UserJobsStatusFilterContainer
+);

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-export class UploadDefinitionsContainer extends Component {
+class UploadDefinitionsContainer extends Component {
   constructor(props, context) {
     super(props, context);
     this.data = [
@@ -64,3 +64,11 @@ export class UploadDefinitionsContainer extends Component {
     );
   }
 }
+
+const mapDispatchToProps = dispatch => ({});
+
+const mapStateToProps = (state, ownProps) => ({});
+
+export default connect(mapStateToProps, mapDispatchToProps)(
+  UploadDefinitionsContainer
+);

@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import TableUi from "../atomic-components/TableUi";
 
-//props should be sent to the table render
-export default class UserJobsContainer extends Component {
+class UserJobsContainer extends Component {
   constructor(props, context) {
     super(props, context);
 
@@ -46,3 +46,9 @@ export default class UserJobsContainer extends Component {
     );
   }
 }
+
+const mapDispatchToProps = dispatch => ({});
+
+const mapStateToProps = (state, ownProps) => ({});
+
+export default connect(mapStateToProps, mapDispatchToProps)(UserJobsContainer);

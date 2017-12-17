@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import DatePicker from "material-ui/DatePicker";
 
-export default class UserJobsDateFilterContainer extends Component {
+class UserJobsDateFilterContainer extends Component {
   constructor(props, context) {
     super(props, context);
     const maxDate = new Date();
@@ -36,3 +37,11 @@ export default class UserJobsDateFilterContainer extends Component {
     );
   }
 }
+
+const mapDispatchToProps = dispatch => ({});
+
+const mapStateToProps = (state, ownProps) => ({});
+
+export default connect(mapStateToProps, mapDispatchToProps)(
+  UserJobsDateFilterContainer
+);

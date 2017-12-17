@@ -1,0 +1,16 @@
+{
+  "players": [
+    {
+      "id": 1,
+      "name": "SM Gavaskar"
+    },
+    {
+      "id": 2,
+      "name": "Virender Sehwag"
+    },
+    {
+      "id": 3,
+      "name": "Rahul Dravid"
+    }
+  ]
+}

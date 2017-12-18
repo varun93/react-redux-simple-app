@@ -1,19 +1,36 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import RaisedButton from "material-ui/RaisedButton";
+import JobStatusFilter from "./UserJobsStatusFilter";
+import DateFilter from "./UserJobsDateFilter";
+import { fetchUserJobs } from "../actions/userJobs";
 
-//filters
-export class Filters extends Component {
-  constructor(props, context) {
-    super(props, context);
-  }
+class Filters extends Component {
+  handleClick = event => {
+    const { jobStatus, fromDate, toDate } = this.props;
+    // do validation if all are empty then disable
+    const filters = {
+      jobStatus,
+      fromDate,
+      toDate
+    };
+    this.props.fetchUserJobs(filters);
+  };
 
   render() {
+    const { handleClick } = this;
     return (
       <div>
-        <JobCompletionStatusFilter />
+        <JobStatusFilter />
         <DateFilter />
-        <button>Apply Filter</button>
+        <RaisedButton onClick={handleClick} label="Filter" primary={true} />
       </div>
     );
   }
 }
+
+const mapDispatchToProps = dispatch => ({
+  fetchUserJobs: filters => dispatch(fetchUserJobs())
+});
+
+export default connect(null, mapDispatchToProps)(Filters);

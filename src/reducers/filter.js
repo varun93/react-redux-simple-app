@@ -12,10 +12,14 @@ const filter = (state = initialState, action) => {
         ...state,
         completionStatus: action.completionStatus
       };
-    case actionTypes.DATE_FILTER:
+    case actionTypes.FROM_DATE_FILTER:
       return {
         ...state,
-        fromDate: action.fromDate,
+        fromDate: action.fromDate
+      };
+    case actionTypes.TO_DATE_FILTER:
+      return {
+        ...state,
         toDate: action.toDate
       };
     default:

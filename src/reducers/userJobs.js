@@ -16,7 +16,7 @@ const userJobs = (state = initialState, action) => {
         isFetching: false,
         error: false
       };
-    case actionTypes.FETCH_PLAYERS_FAILURE:
+    case actionTypes.FETCH_USER_JOBS_FAILURE:
       return { ...state, error: true, isFetching: false };
     default:
       return state;

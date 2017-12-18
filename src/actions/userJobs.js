@@ -1,5 +1,5 @@
 import * as actionTypes from "../constants/actionTypes";
-import { Api } from "../Api";
+import { Api } from "../api";
 
 export const initiateUserJobsFetch = () => {
   return { type: actionTypes.INITIATE_USER_JOBS_FETCH };
@@ -12,11 +12,12 @@ export const fetchUserJobsSuccess = (userJobs = []) => {
 
 // fetch players failure
 export const fetchPlayersFailure = error => {
-  return { type: actionTypes.FETCH_PLAYERS_FAILURE, error };
+  return { type: actionTypes.FETCH_USER_JOBS_FAILURE, error };
 };
 
 export const fetchUserJobs = filter => {
   return async (dispatch, getState) => {
+    dispatch(initiateUserJobsFetch());
     try {
       const userJobs = await Api().fetchUserJobs(filter);
       dispatch(fetchUserJobsSuccess(userJobs));

@@ -1,38 +1,34 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import RadioButtonUi from "../atomic-components/RadioButtonUi";
+import { applyJobsStatusFilter } from "../actions/filter";
 
 class UserJobsStatusFilterContainer extends Component {
-  constructor(props, context) {
-    super(props, context);
-    this.options = [
-      {
-        value: "completed",
-        label: "Completed"
-      },
-      {
-        value: "in-progress",
-        label: "In Progress"
-      },
-      {
-        value: "new",
-        label: "New"
-      },
-      {
-        value: "failed",
-        label: "Failed"
-      }
-    ];
-    this.state = { selectedValue: "in-progress" };
-  }
+  options = [
+    {
+      value: "completed",
+      label: "Completed"
+    },
+    {
+      value: "in-progress",
+      label: "In Progress"
+    },
+    {
+      value: "new",
+      label: "New"
+    },
+    {
+      value: "failed",
+      label: "Failed"
+    }
+  ];
 
-  handleChange = (e, selectedValue) => {
-    this.setState({ selectedValue });
+  handleChange = (e, jobStatus) => {
+    this.props.applyJobsStatusFilter(jobStatus);
   };
 
   render() {
     const { options, handleChange } = this;
-    const { selectedValue } = this.state;
 
     return (
       <div>
@@ -47,10 +43,8 @@ class UserJobsStatusFilterContainer extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch => ({});
+const mapDispatchToProps = dispatch => ({
+  applyJobsStatusFilter: jobStatus => dispatch(applyJobsStatusFilter(jobStatus))
+});
 
-const mapStateToProps = (state, ownProps) => ({});
-
-export default connect(mapStateToProps, mapDispatchToProps)(
-  UserJobsStatusFilterContainer
-);
+export default connect(null, mapDispatchToProps)(UserJobsStatusFilterContainer);

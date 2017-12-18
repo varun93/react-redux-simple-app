@@ -1,33 +1,35 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import DatePicker from "material-ui/DatePicker";
+import { applyFromDateFilter, applyToDateFilter } from "../actions/filter";
 
 class UserJobsDateFilterContainer extends Component {
   constructor(props, context) {
     super(props, context);
-    const maxDate = new Date();
-    maxDate.setFullYear(maxDate.getFullYear() + 1);
-    maxDate.setHours(0, 0, 0, 0);
-    this.state = { maxDate, toDate: maxDate, fromDate: new Date() };
+    this.maxDate = new Date();
   }
 
-  //max date should be today
   render() {
-    const { fromDate, toDate } = this.state;
+    const {
+      applyFromDateFilter,
+      applyToDateFilter,
+      fromDate,
+      toDate
+    } = this.props;
     const { maxDate } = this;
 
     return (
       <div>
         <DatePicker
           onChange={(event, date) => {
-            this.setState({ fromDate: date });
+            applyFromDateFilter(date);
           }}
           floatingLabelText="To Date"
           value={fromDate}
         />
         <DatePicker
           onChange={(event, date) => {
-            this.setState({ toDate: date });
+            applyToDateFilter(date);
           }}
           floatingLabelText="From Date"
           value={toDate}
@@ -38,9 +40,15 @@ class UserJobsDateFilterContainer extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch => ({});
+const mapDispatchToProps = dispatch => ({
+  applyFromDateFilter: fromDate => dispatch(applyFromDateFilter(fromDate)),
+  applyToDateFilter: toDate => dispatch(applyToDateFilter(toDate))
+});
 
-const mapStateToProps = (state, ownProps) => ({});
+const mapStateToProps = (state, ownProps) => ({
+  fromDate: state.filter.fromDate,
+  toDate: state.filter.toDate
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(
   UserJobsDateFilterContainer

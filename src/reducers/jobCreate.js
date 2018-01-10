@@ -3,27 +3,23 @@ import * as actionTypes from "../constants/actionTypes";
 const initialState = {
   isFetching: false,
   error: false,
-  fileStoreId: null,
-  inputFile: null
+  jobId: null
 };
-const fileUpload = (state = initialState, action) => {
+const jobCreate = (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.INITIATE_FILE_UPLOAD:
+    case actionTypes.INITIATE_JOB_CREATE:
       return { ...state, isFetching: true, error: false };
-    case actionTypes.FILE_UPLOAD_SUCCESS:
+    case actionTypes.JOB_CREATE_SUCCESS:
       return {
         ...state,
-        fileStoreId: action.fileStoreId,
+        jobId: action.jobId,
         isFetching: false,
         error: false
       };
-    case actionTypes.FILE_UPLOAD_FAILURE:
+    case actionTypes.JOB_CREATE_FAILED:
       return { ...state, error: true, isFetching: false };
-    case actionTypes.FILE_SELECTED:
-      return { ...state, inputFile: action.file };
-
     default:
       return state;
   }
 };
-export default fileUpload;
+export default jobCreate;

@@ -1,14 +1,18 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import DatePicker from "material-ui/DatePicker";
 import { applyFromDateFilter, applyToDateFilter } from "../actions/filter";
 
 class UserJobsDateFilterContainer extends Component {
-  constructor(props, context) {
-    super(props, context);
-    this.maxDate = new Date();
-  }
+  static propTypes = {
+    applyFromDateFilter: PropTypes.func.isRequired,
+    applyToDateFilter: PropTypes.func.isRequired,
+    fromDate: PropTypes.instanceOf(Date),
+    toDate: PropTypes.instanceOf(Date)
+  };
 
+  maxDate = new Date();
   render() {
     const {
       applyFromDateFilter,
@@ -20,6 +24,7 @@ class UserJobsDateFilterContainer extends Component {
 
     return (
       <div>
+        <h5>By Date</h5>
         <DatePicker
           onChange={(event, date) => {
             applyFromDateFilter(date);

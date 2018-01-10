@@ -5,7 +5,7 @@ import MenuItem from "material-ui/MenuItem";
 const DropDownUi = ({ label, options = [], name, selected, handleChange }) => {
   const renderSelectMenuItems = () => {
     return options.map((value, index) => {
-      return <MenuItem key={index} value={index + 1} primaryText={value} />;
+      return <MenuItem key={index} value={value} primaryText={value} />;
     });
   };
 

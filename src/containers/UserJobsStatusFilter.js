@@ -1,9 +1,14 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import RadioButtonUi from "../atomic-components/RadioButtonUi";
 import { applyJobsStatusFilter } from "../actions/filter";
 
 class UserJobsStatusFilterContainer extends Component {
+  static propTypes = {
+    applyJobsStatusFilter: PropTypes.func.isRequired
+  };
+
   options = [
     {
       value: "completed",
@@ -32,6 +37,7 @@ class UserJobsStatusFilterContainer extends Component {
 
     return (
       <div>
+        <h5>By Status</h5>
         <RadioButtonUi
           defaultValue="completed"
           name="Completion Status"

@@ -7,14 +7,39 @@ import {
   TableRow,
   TableRowColumn
 } from "material-ui/Table";
+import FlatButton from "material-ui/FlatButton";
 
 const TableUi = ({ tableHeader, tableBody, styles }) => {
+  const renderTableCell = (fieldType, row, fieldName) => {
+    const field = row[fieldName];
+
+    switch (fieldType) {
+      case "label":
+        return field;
+      case "hyperlink":
+        const label = field.label;
+        const href = field.href;
+        const buttonProps = { label, href };
+        if (href) {
+          buttonProps.target = "_blank";
+          buttonProps.primary = true;
+        } else {
+          buttonProps.disabled = true;
+        }
+        return <FlatButton {...buttonProps} />;
+      default:
+        break;
+    }
+  };
+
   const renderTableHeader = () => {
     return (
       <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
         <TableRow>
-          {tableHeader.map((header, index) => {
-            return <TableHeaderColumn key={index}>{header}</TableHeaderColumn>;
+          {tableHeader.fields.map((fieldHeader, index) => {
+            return (
+              <TableHeaderColumn key={index}>{fieldHeader}</TableHeaderColumn>
+            );
           })}
         </TableRow>
       </TableHeader>
@@ -28,8 +53,11 @@ const TableUi = ({ tableHeader, tableBody, styles }) => {
           return (
             <TableRow key={index}>
               {Object.keys(row).map((fieldName, index) => {
+                const fieldType = tableHeader.fieldsType[index];
                 return (
-                  <TableRowColumn key={index}>{row[fieldName]}</TableRowColumn>
+                  <TableRowColumn key={index}>
+                    {renderTableCell(fieldType, row, fieldName)}
+                  </TableRowColumn>
                 );
               })}
             </TableRow>

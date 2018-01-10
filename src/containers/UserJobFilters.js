@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import RaisedButton from "material-ui/RaisedButton";
 import JobStatusFilter from "./UserJobsStatusFilter";
@@ -23,7 +24,12 @@ class Filters extends Component {
       <div>
         <JobStatusFilter />
         <DateFilter />
-        <RaisedButton onClick={handleClick} label="Filter" primary={true} />
+        <RaisedButton
+          onClick={handleClick}
+          label="Filter"
+          primary={true}
+          fullWidth={true}
+        />
       </div>
     );
   }

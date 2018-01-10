@@ -3,9 +3,18 @@ import * as actionTypes from "../constants/actionTypes";
 const initialState = {
   isFetching: false,
   error: false,
-  selectedModule: 1,
-  selectedFileType: 1,
-  items: []
+  selectedModule: null,
+  selectedModuleDefinition: null,
+  items: {}
+};
+
+const transformUploadDefinitions = uploadDefinitions => {
+  return uploadDefinitions.reduce((transformedDefinition, moduleDefinition) => {
+    transformedDefinition[
+      moduleDefinition.name
+    ] = moduleDefinition.Definitions.map(definition => definition.name);
+    return transformedDefinition;
+  }, {});
 };
 
 const uploadDefinitions = (state = initialState, action) => {
@@ -14,9 +23,13 @@ const uploadDefinitions = (state = initialState, action) => {
       return { ...state, isFetching: true, error: false };
 
     case actionTypes.UPLOAD_DEFINTIONS_RECEIVED:
+      const uploadDefinitions = transformUploadDefinitions(
+        action.uploadDefinitions
+      );
       return {
         ...state,
-        items: action.uploadDefinitions,
+        items: uploadDefinitions,
+        selectedModule: Object.keys(uploadDefinitions)[0],
         isFetching: false,
         error: false
       };
@@ -27,13 +40,14 @@ const uploadDefinitions = (state = initialState, action) => {
     case actionTypes.MODULE_SELECTED:
       return {
         ...state,
-        selectedModule: action.moduleName
+        selectedModule: action.moduleName,
+        selectedModuleDefinition: null
       };
 
-    case actionTypes.FILE_TYPE_SELECTED:
+    case actionTypes.MOUDULE_DEFINITION_SELECTED:
       return {
         ...state,
-        selectedFileType: action.fileType
+        selectedModuleDefinition: action.moduleDefinition
       };
 
     default:

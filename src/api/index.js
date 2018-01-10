@@ -1,52 +1,66 @@
 import axios from "axios";
 import * as apiEndpoints from "../constants/ApiEndpoints";
-import { prepareFormData } from "../utils";
+import { prepareFormData, fetchFromLocalStorage } from "../utils";
+import * as requestObjects from "./requestObjects";
+import {
+  uploadDefinitionsResponse,
+  createJobResponse,
+  searchUserJobsReponse
+} from "./apiResponse";
+
+// application/json
+// application/x-www-form-urlencoded
+// required for login only
+// Authorization: "Basic ZWdvdi11c2VyLWNsaWVudDplZ292LXVzZXItc2VjcmV0
 
 export const Api = () => {
   const instance = axios.create({
     baseURL: window.location.origin,
     headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-      Authorization: "Basic ZWdvdi11c2VyLWNsaWVudDplZ292LXVzZXItc2VjcmV0"
+      "Content-Type": "application/json"
     }
   });
 
-  const httpRequest = async (endPoint, requestParams) => {
-    const response = await instance.post(endPoint, requestParams);
+  const authToken = fetchFromLocalStorage("token");
+  const tenantId = fetchFromLocalStorage("tenantId");
+
+  const httpRequest = async (endPoint, requestBody) => {
+    const response = await instance.post(endPoint, requestBody);
     return response;
   };
 
+  //doesn't take any input parameters
   const fetchUploadDefintions = async () => {
-    const uploadDefinitions = [
-      { moduleName: "inventory", fileTypes: ["i1", "i2", "i3", "i4", "i5"] },
-      { moduleName: "swm", fileTypes: ["s1", "s2", "s3", "s4", "s5"] },
-      { moduleName: "propertytax", fileTypes: ["p1", "p2", "p3", "p4", "p5"] },
-      { moduleName: "assets", fileTypes: ["a1", "a2", "a3", "a4", "a5"] }
-    ];
-
+    const response = uploadDefinitionsResponse();
     return new Promise((resolve, reject) => {
       setTimeout(function() {
-        resolve(uploadDefinitions);
+        resolve(response.ModuleDefs);
       }, 1000);
     });
   };
 
-  const fetchUserJobs = async filter => {
-    const userJobs = [
-      { id: 1, status: "Completed", fileStoreId: "" },
-      { id: 2, status: "Failed" },
-      { id: 3, status: "InProgress" },
-      { id: 4, status: "New" },
-      { id: 5, status: "Completed", fileStoreId: "" }
-    ];
+  // job search request
+  const fetchUserJobs = async (codes = [], statuses = [], fromDate, toDate) => {
+    const response = searchUserJobsReponse();
     return new Promise((resolve, reject) => {
       setTimeout(function() {
-        resolve(userJobs);
+        resolve(response.UploadJobs);
       }, 1000);
     });
   };
 
-  const uploadFileMock = async ({ module, tenantId, file }) => {
+  // upload job request
+  const createJob = async (requestFilePath, moduleName, defName) => {
+    const response = createJobResponse();
+    return new Promise((resolve, reject) => {
+      setTimeout(function() {
+        const jobStatusId = "acds133";
+        resolve(response.UploadJobs);
+      }, 1000);
+    });
+  };
+
+  const uploadFileMock = async (module, file) => {
     return new Promise((resolve, reject) => {
       setTimeout(function() {
         const fileStoreId = "2323424243";
@@ -55,17 +69,8 @@ export const Api = () => {
     });
   };
 
-  const fetchJobStatus = async ({ fileStoreId }) => {
-    return new Promise((resolve, reject) => {
-      setTimeout(function() {
-        const jobStatusId = "acds133";
-        resolve(jobStatusId);
-      }, 1000);
-    });
-  };
-
   // upload file API
-  const uploadFile = async ({ module, tenantId, file }) => {
+  const uploadFile = async (module, file) => {
     const requestParams = { tenantId, module, file };
     const formData = prepareFormData(requestParams);
     const endPoint = apiEndpoints.FILE_UPLOAD_ENDPOINT;
@@ -94,7 +99,7 @@ export const Api = () => {
   return {
     uploadFile,
     uploadFileMock,
-    fetchJobStatus,
+    createJob,
     fetchUserJobs,
     fetchUploadDefintions
   };

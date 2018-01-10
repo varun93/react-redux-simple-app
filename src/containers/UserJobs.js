@@ -1,15 +1,38 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import TableUi from "../atomic-components/TableUi";
 import { fetchUserJobs } from "../actions/userJobs";
 import UserJobFilters from "./UserJobFilters";
 
+// todo map the header fields with the data keys
 class UserJobsContainer extends Component {
-  constructor(props, context) {
-    super(props, context);
-    this.tableHeader = ["Job ID", "Status", "Download"];
-  }
+  static propTypes = {
+    fetchUserJobs: PropTypes.func.isRequired,
+    userJobs: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.string,
+        status: PropTypes.oneOf(["completed", "new", "in-progress", "failed"]),
+        moduleName: PropTypes.string,
+        moduleDefiniton: PropTypes.string,
+        download: PropTypes.shape({
+          label: PropTypes.string,
+          href: PropTypes.string
+        })
+      })
+    )
+  };
 
+  tableHeader = {
+    fields: [
+      "Job ID",
+      "Module Name",
+      "Module Definition",
+      "Status",
+      "Download"
+    ],
+    fieldsType: ["label", "label", "label", "label", "hyperlink"]
+  };
   componentDidMount() {
     this.props.fetchUserJobs();
   }

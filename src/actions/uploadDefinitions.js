@@ -5,8 +5,8 @@ export const moduleSelected = moduleName => {
   return { type: actionTypes.MODULE_SELECTED, moduleName };
 };
 
-export const fileTypeSelected = fileType => {
-  return { type: actionTypes.FILE_TYPE_SELECTED, fileType };
+export const moduleDefinitionSelected = moduleDefinition => {
+  return { type: actionTypes.MOUDULE_DEFINITION_SELECTED, moduleDefinition };
 };
 
 export const initiateUploadDefinitionsFetch = () => {
